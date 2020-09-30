@@ -1,5 +1,11 @@
 <template>
-    <div>标签</div>
+    <div>
+       <Layout>
+           标签
+       </Layout>
+    </div>
+
+
 </template>
 
 <script lang="ts">

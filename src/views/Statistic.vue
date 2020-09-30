@@ -1,5 +1,9 @@
 <template>
-<div>统计</div>
+<div>
+  <Layout>
+      <p>统计</p>
+  </Layout>
+</div>
 </template>
 
 <script lang="ts">
@@ -9,5 +13,6 @@
 </script>
 
 <style scoped lang="scss">
+
 
 </style>

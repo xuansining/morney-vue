@@ -4,6 +4,7 @@ import Home from '../views/Home.vue';
 import Money from '@/views/Money.vue';
 import Label from '@/views/Label.vue';
 import Statistic from '@/views/Statistic.vue';
+import NoFound from '@/views/NoFound.vue';
 
 Vue.use(VueRouter);
 
@@ -36,6 +37,10 @@ const routes: Array<RouteConfig> = [
   },{
     path:'/Statistic',
     component: Statistic
+  }
+  ,{
+    path:'*',
+    component: NoFound
   }
 ];
 

@@ -1,9 +1,7 @@
 <template>
   <div id="app">
     <router-view></router-view>
-     <router-link to="/money">记账</router-link>
-     <router-link to="/label">标签</router-link>
-     <router-link to="/statistic">统计</router-link>
+
   </div>
 </template>
 
@@ -15,17 +13,9 @@
   text-align: center;
   color: #2c3e50;
 }
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+*{
+  padding: 0;margin: 0;
 }
+
+
 </style>

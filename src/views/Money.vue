@@ -1,5 +1,7 @@
 <template>
-    <div>记账</div>
+    <div>
+        <Layout>记账</Layout>
+    </div>
 </template>
 
 <script lang="ts">
@@ -9,5 +11,6 @@
 </script>
 
 <style scoped lang="scss">
+
 
 </style>
