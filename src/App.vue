@@ -6,23 +6,19 @@
 </template>
 
 <style lang="scss">
+  @import "~@/assets/style/reset.scss";
+  @import "~@/assets/style/helper.scss";
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color:#2c3e50
 
 }
-*{
-  padding: 0;margin: 0;box-sizing: border-box;
-}
-a{
-  text-decoration: none;
-  color:inherit;
-}
+
  body{
    line-height: 1.5;
+   font-family: $font-fang-song;
+
+   -webkit-font-smoothing: antialiased;
+   -moz-osx-font-smoothing: grayscale;
+   color:#333333;
  }
 
 </style>
