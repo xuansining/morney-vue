@@ -14,7 +14,7 @@
 
  body{
    line-height: 1.5;
-   font-family: $font-fang-song;
+   font-family: $font-hei;
 
    -webkit-font-smoothing: antialiased;
    -moz-osx-font-smoothing: grayscale;
