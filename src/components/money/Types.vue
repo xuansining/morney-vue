@@ -1,8 +1,8 @@
 <template>
     <div class="type">
         <ul>
-            <li :class="tagType==='-'&& 'selected'" @click="selectType('-')">支出</li>
-            <li :class="tagType==='+'&& 'selected'" @click="selectType('+')">收入</li>
+            <li :class="value==='-'&& 'selected'" @click="selectType('-')">支出</li>
+            <li :class="value==='+'&& 'selected'" @click="selectType('+')">收入</li>
         </ul>
     </div>
 </template>
@@ -15,17 +15,18 @@
   @Component
 
   export default class Types extends Vue {
-    tagType = '-';
-    @Prop(String) yyy: string | undefined;
-    @Prop(Number) xxx: number | undefined;
+    @Prop({default:'-'}) readonly value!: string;
+
+
 
     selectType(string: string) {
       if (string !== '-' && string !== '+') {
         throw new Error('unknown type');
       }
-      this.tagType = string;
+      this.$emit('update:value', string);
 
     }
+
 
   }
 </script>
