@@ -1,11 +1,11 @@
 <template>
     <div>
         <Layout :class-prefix="'layout'">
-            <Tags :data-source.sync="dataSource"  @update:value="onUpdateTags"></Tags>
+            <Tags :data-source.sync="dataSource" @update:value="onUpdateTags"></Tags>
             <Notes @update:value="onUpdateNotes"></Notes>
-            <Types  :value.sync="record.type"></Types>
-            <NumberPad :value.sync="record.amount"></NumberPad>
-            {{record}}
+            <Types :value.sync="record.type"></Types>
+            <NumberPad :value.sync="record.amount" @submit="onSubmit"></NumberPad>
+            {{recordList}}
         </Layout>
     </div>
 </template>
@@ -17,12 +17,14 @@
   import Notes from '@/components/money/Notes.vue';
   import Vue from 'vue';
   import {Component} from 'vue-property-decorator';
+  window.localStorage.setItem('version','0.0.1');
 
   type Record = {
     tags: string[];
     notes: string;
     type: string;
     amount: string;
+    createAt?: Date;
   }
   @Component({
     components: {
@@ -30,7 +32,8 @@
       NumberPad: Numberpad,
       Tags: Tags,
       Types: Types,
-      Notes: Notes
+      Notes: Notes,
+
 
     }
   })
@@ -39,6 +42,7 @@
 
     dataSource = ['衣', '食', '住', '行', '嫖', '赌'];
     record: Record = {tags: [], notes: '', type: '-', amount: '10'};
+    recordList=JSON.parse(window.localStorage.getItem('recordList') || '[]');
 
     onUpdateTags(value: string[]) {
       this.record.tags = value;
@@ -48,7 +52,15 @@
       this.record.notes = value;
     }
 
+    onSubmit() {
+      console.log('提交');
+      const deepClone: Record = JSON.parse(JSON.stringify(this.record));
+      deepClone.createAt=new Date();
+      this.recordList.push(deepClone);
+      console.log(this.recordList);
+      window.localStorage.setItem('recordList',JSON.stringify(this.recordList))
 
+    }
 
 
   }
