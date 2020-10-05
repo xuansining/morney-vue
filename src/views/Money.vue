@@ -19,6 +19,7 @@
   import {Component} from 'vue-property-decorator';
   window.localStorage.setItem('version','0.0.1');
 
+  const {model}=require('@/model.js') || {};
   type Record = {
     tags: string[];
     notes: string;
@@ -42,7 +43,7 @@
 
     dataSource = ['衣', '食', '住', '行', '嫖', '赌'];
     record: Record = {tags: [], notes: '', type: '-', amount: '10'};
-    recordList=JSON.parse(window.localStorage.getItem('recordList') || '[]');
+    recordList=model.fetch();
 
     onUpdateTags(value: string[]) {
       this.record.tags = value;
@@ -57,8 +58,7 @@
       const deepClone: Record = JSON.parse(JSON.stringify(this.record));
       deepClone.createAt=new Date();
       this.recordList.push(deepClone);
-      console.log(this.recordList);
-      window.localStorage.setItem('recordList',JSON.stringify(this.recordList))
+      model.save(this.recordList)
 
     }
 
