@@ -17,16 +17,12 @@
   import Notes from '@/components/money/Notes.vue';
   import Vue from 'vue';
   import {Component} from 'vue-property-decorator';
+
   window.localStorage.setItem('version','0.0.1');
 
-  const {model}=require('@/model.js') || {};
-  type Record = {
-    tags: string[];
-    notes: string;
-    type: string;
-    amount: string;
-    createAt?: Date;
-  }
+  import model from '@/model'
+
+
   @Component({
     components: {
 
@@ -42,7 +38,7 @@
   export default class Money extends Vue {
 
     dataSource = ['衣', '食', '住', '行', '嫖', '赌'];
-    record: Record = {tags: [], notes: '', type: '-', amount: '10'};
+    record: RecordItem = {tags: [], notes: '', type: '-', amount: '10'};
     recordList=model.fetch();
 
     onUpdateTags(value: string[]) {
@@ -55,7 +51,7 @@
 
     onSubmit() {
       console.log('提交');
-      const deepClone: Record = JSON.parse(JSON.stringify(this.record));
+      const deepClone: RecordItem= model.clone(this.record);
       deepClone.createAt=new Date();
       this.recordList.push(deepClone);
       model.save(this.recordList)
