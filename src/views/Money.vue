@@ -3,7 +3,7 @@
         <Layout :class-prefix="'layout'">
            <Tags></Tags>
             <Notes></Notes>
-            <Types></Types>
+            <Types :xxx=" 3333 " :yyy="'hi'"></Types>
             <NumberPad></NumberPad>
         </Layout>
     </div>

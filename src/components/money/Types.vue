@@ -10,18 +10,23 @@
 <script lang="ts">
 
   import Vue from 'vue';
-  import {Component} from 'vue-property-decorator';
+  import {Component, Prop} from 'vue-property-decorator';
+
   @Component
 
   export default class Types extends Vue {
     tagType = '-';
+    @Prop(String) yyy: string | undefined;
+    @Prop(Number) xxx: number | undefined;
 
     selectType(string: string) {
       if (string !== '-' && string !== '+') {
-         throw new Error('unknown type');
+        throw new Error('unknown type');
       }
-      this.tagType=string;
+      this.tagType = string;
+
     }
+
   }
 </script>
 
