@@ -1,7 +1,7 @@
 <template>
     <div>
         <Layout :class-prefix="'layout'">
-           <Tags></Tags>
+           <Tags :data-source.sync="dataSource"></Tags>
             <Notes></Notes>
             <Types :xxx=" 3333 " :yyy="'hi'"></Types>
             <NumberPad></NumberPad>
@@ -22,6 +22,11 @@
       Tags:Tags,
       Types:Types,
       Notes:Notes
+    },
+    data(){
+      return{
+        dataSource:['衣','食','住','行','嫖','赌']
+      }
     }
   };
 </script>

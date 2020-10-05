@@ -1,38 +1,55 @@
 <template>
     <div class="tags">
-        <ul class="current">
+        <ul class="current" >
 
-            <li>衣</li>
-            <li>食</li>
-            <li>住</li>
-            <li>行3333333</li> <li>衣</li>
-            <li>食</li>
-            <li>住</li>
-            <li>行</li> <li>衣</li>
-            <li>食</li>
-            <li>住</li>
-            <li>行</li>
-            <li>行</li> <li>衣</li>
-            <li>食</li>
-            <li>住</li>
-            <li>行</li><li>行</li> <li>衣</li>
-            <li>食</li>
-            <li>住</li>
 
+            <li @click="toggle(tag)" :class="{selected:selectedTags.indexOf(tag)>=0}" v-for="tag in dataSource" v-bind:key="tag">
+                {{tag}}
+            </li>
 
 
 
         </ul>
         <div class="new">
-            <button>新增标签</button>
+            <button @click="create">新增标签</button>
         </div>
     </div>
 </template>
 
 <script lang="ts">
-  export default {
-    name: 'Tags'
-  };
+    import Vue from 'vue'
+    import {Component,Prop} from 'vue-property-decorator';
+
+    @Component
+  export  default  class Tags extends Vue{
+    @Prop(Array) readonly dataSource: string[] | undefined;
+    selectedTags: string[] | undefined =[];
+    toggle(tag: string){
+      if (this.selectedTags){
+           const index=this.selectedTags.indexOf(tag);
+        if(index>=0){
+            this.selectedTags.splice(index,1)
+        }else{
+
+          this.selectedTags?.push(tag);
+
+        }
+      }
+
+
+    }
+    create(){
+      const createdTag=window.prompt('请输入标签');
+      if(createdTag){
+        this.$emit('update:dataSource',[...this.dataSource!,createdTag])
+
+      }else{
+        window.alert('标签不能为空');
+      }
+    }
+
+
+  }
 </script>
 
 <style scoped lang="scss">
@@ -48,7 +65,8 @@
 
             > li {
                 font-size: 14px;
-                background-color: #cccccc;
+                $bg:#cccccc;
+                background-color:$bg;
                 padding: 0 16px;
                 margin-right: 16px;
                 $height: 24px;
@@ -56,6 +74,11 @@
                 height: $height;
                 border-radius: $height/2;
                 margin-top:5px;
+                &.selected{
+                    background:darken($bg,40%);
+                   color: white;
+                }
+
             }
         }
 
