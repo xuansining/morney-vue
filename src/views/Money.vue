@@ -1,11 +1,11 @@
 <template>
     <div>
         <Layout :class-prefix="'layout'">
-            <Tags :data-source.sync="dataSource" @update:value="onUpdateTags"></Tags>
+            <Tags :data-source="dataSource" @update:value="onUpdateTags"></Tags>
             <Notes @update:value="onUpdateNotes"></Notes>
             <Types :value.sync="record.type"></Types>
             <NumberPad :value.sync="record.amount" @submit="onSubmit"></NumberPad>
-            {{recordList}}
+
         </Layout>
     </div>
 </template>
@@ -16,12 +16,13 @@
   import Types from '@/components/money/Types.vue';
   import Notes from '@/components/money/Notes.vue';
   import Vue from 'vue';
-  import {Component} from 'vue-property-decorator';
+  import {Component, Watch} from 'vue-property-decorator';
 
   window.localStorage.setItem('version','0.0.1');
 
-  import model from '@/model'
-
+  import recorditemmodel from '@/models/recorditemmodel'
+  import tagModel from '@/models/tagsmodel';
+  tagModel.fetch();
 
   @Component({
     components: {
@@ -37,10 +38,13 @@
 
   export default class Money extends Vue {
 
-    dataSource = ['衣', '食', '住', '行', '嫖', '赌'];
-    record: RecordItem = {tags: [], notes: '', type: '-', amount: '10'};
-    recordList=model.fetch();
-
+    dataSource = tagModel.data;
+    record: RecordItem = {tags: [], notes: '', type: '-', amount: '0'};
+    recordList=recorditemmodel.fetch();
+    // @Watch('dataSource')
+    // onDataSourceChanged(){
+    //   tagModel.save()
+    // }
     onUpdateTags(value: string[]) {
       this.record.tags = value;
     }
@@ -51,10 +55,10 @@
 
     onSubmit() {
       console.log('提交');
-      const deepClone: RecordItem= model.clone(this.record);
+      const deepClone: RecordItem= recorditemmodel.clone(this.record);
       deepClone.createAt=new Date();
       this.recordList.push(deepClone);
-      model.save(this.recordList)
+      recorditemmodel.save(this.recordList)
 
     }
 

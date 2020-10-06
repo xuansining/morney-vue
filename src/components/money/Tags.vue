@@ -1,12 +1,12 @@
 <template>
     <div class="tags">
-        <ul class="current" >
+        <ul class="current">
 
 
-            <li @click="toggle(tag)" :class="{selected:selectedTags.indexOf(tag)>=0}" v-for="tag in dataSource" v-bind:key="tag">
+            <li @click="toggle(tag)" :class="{selected:selectedTags.indexOf(tag)>=0}" v-for="tag in dataSource"
+                v-bind:key="tag">
                 {{tag}}
             </li>
-
 
 
         </ul>
@@ -17,19 +17,21 @@
 </template>
 
 <script lang="ts">
-    import Vue from 'vue'
-    import {Component,Prop,Watch} from 'vue-property-decorator';
+  import Vue from 'vue';
+  import {Component, Prop, Watch} from 'vue-property-decorator';
+  import tagModel from '@/models/tagsmodel';
 
-    @Component
-  export  default  class Tags extends Vue{
+  @Component
+  export default class Tags extends Vue {
     @Prop(Array) readonly dataSource: string[] | undefined;
-    selectedTags: string[] | undefined =[];
-    toggle(tag: string){
-      if (this.selectedTags){
-           const index=this.selectedTags.indexOf(tag);
-        if(index>=0){
-            this.selectedTags.splice(index,1)
-        }else{
+    selectedTags: string[] | undefined = [];
+
+    toggle(tag: string) {
+      if (this.selectedTags) {
+        const index = this.selectedTags.indexOf(tag);
+        if (index >= 0) {
+          this.selectedTags.splice(index, 1);
+        } else {
 
           this.selectedTags?.push(tag);
 
@@ -38,19 +40,27 @@
 
 
     }
-    create(){
-      const createdTag=window.prompt('请输入标签');
-      if(createdTag){
-        this.$emit('update:dataSource',[...this.dataSource!,createdTag])
 
-      }else{
+    create() {
+      const createdTag = window.prompt('请输入标签');
+      if (createdTag) {
+        const message = tagModel.create(createdTag);
+        if (message === 'duplicated') {
+          alert('标签名重复了');
+        } else if (message === 'success') {
+          alert('标签创建成功');
+        }
+
+
+      } else {
         window.alert('标签不能为空');
       }
     }
+
     @Watch('selectedTags')
-      onSelectedTagsChanged(value: string){
-        this.$emit('update:value',value)
-     }
+    onSelectedTagsChanged(value: string) {
+      this.$emit('update:value', value);
+    }
 
   }
 </script>
@@ -68,18 +78,19 @@
 
             > li {
                 font-size: 14px;
-                $bg:#cccccc;
-                background-color:$bg;
+                $bg: #cccccc;
+                background-color: $bg;
                 padding: 0 16px;
                 margin-right: 16px;
                 $height: 24px;
                 line-height: $height;
                 height: $height;
                 border-radius: $height/2;
-                margin-top:5px;
-                &.selected{
-                    background:darken($bg,40%);
-                   color: white;
+                margin-top: 5px;
+
+                &.selected {
+                    background: darken($bg, 40%);
+                    color: white;
                 }
 
             }

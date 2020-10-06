@@ -32,6 +32,7 @@
 <style scoped lang="scss">
     @import "~@/assets/style/helper";
   nav{
+      background-color: #fff;
       display: flex;
       flex-direction: row;
       box-shadow: 0 0 3px rgba(0,0,0,0.25);

@@ -1,7 +1,7 @@
-const model = {
-    clone(object: RecordItem | RecordItem[]){
-        return JSON.parse(JSON.stringify(object))
-    },
+const recorditemmodel = {
+  clone(object: RecordItem | RecordItem[]) {
+    return JSON.parse(JSON.stringify(object));
+  },
   fetch() {
     return JSON.parse(window.localStorage.getItem('recordList') || '[]') as RecordItem[];
   },
@@ -9,4 +9,4 @@ const model = {
     window.localStorage.setItem('recordList', JSON.stringify(data));
   }
 };
-export default model;
+export default recorditemmodel;
