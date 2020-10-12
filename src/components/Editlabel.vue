@@ -7,11 +7,11 @@
         </div>
         <div class="editform-wrapper">
 
-            <EditForm note-name="标签名" placeholder="请输入标签名" :value="tag.name"></EditForm>
+            <EditForm note-name="标签名" placeholder="请输入标签名" :value="tag.name" @update:value="updateTagName"></EditForm>
         </div>
         <div class="button-wrapper">
 
-            <Button>删除标签</Button>
+            <Button @click="remove(tag.id)">删除标签</Button>
         </div>
 
     </Layout>
@@ -29,55 +29,76 @@
   @Component({
     components: {
       EditForm: EditForm,
-      Button:Button
+      Button: Button
     }
   })
 
   export default class Editlabel extends Vue {
-    tag: {id: string;name: string}={id:'0',name:'admin'};
+    tag: { id: string; name: string } = {id: '0', name: 'admin'};
 
     created() {
 
       const id = this.$route.params.id;
       const tag = tagList.filter(tag => tag.id === id)[0];
       if (tag) {
-        this.tag=tag;
+        this.tag = tag;
       } else {
         this.$router.replace('/404');
       }
 
     }
-    goBack(){
-      this.$router.back()
+
+    goBack() {
+      this.$router.back();
+    }
+
+    updateTagName(name: string) {
+      tagModel.update(this.tag.id, name);
+    }
+
+    remove(id: string) {
+      console.log(id);
+      if (tagModel.remove(id)) {
+        this.$router.back();
+      } else {
+        alert('删除失败');
+      }
+
+
     }
   }
 </script>
 
 <style scoped lang="scss">
-    .titleBar{
+    .titleBar {
         text-align: center;
         display: flex;
         justify-content: space-between;
         align-items: center;
         padding: 15px 23px;
         background-color: #fff;
-        .title{
-           font-size: 16px;
+
+        .title {
+            font-size: 16px;
         }
-        .left{
+
+        .left {
 
         }
-        .right{
+
+        .right {
             width: 9px;
             height: 2px;
         }
 
     }
-    .editform-wrapper{
+
+    .editform-wrapper {
         margin-top: 5px;
         background: #ffffff;
     }
-    .button-wrapper{
+
+    .button-wrapper {
         padding: 16px 0;
         text-align: center;
     }
