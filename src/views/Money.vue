@@ -2,7 +2,7 @@
     <div>
         <Layout :class-prefix="'layout'">
             <Tags :data-source="dataSource" @update:value="onUpdateTags"></Tags>
-            <Notes @update:value="onUpdateNotes"></Notes>
+            <EditForm @update:value="onUpdateNotes" placeholder="请输入备注" note-name="备注"></EditForm>
             <Types :value.sync="record.type"></Types>
             <NumberPad :value.sync="record.amount" @submit="onSubmit"></NumberPad>
 
@@ -14,9 +14,9 @@
   import Numberpad from '@/components/money/Numberpad.vue';
   import Tags from '@/components/money/Tags.vue';
   import Types from '@/components/money/Types.vue';
-  import Notes from '@/components/money/Notes.vue';
+  import EditForm from '@/components/money/EditForm.vue';
   import Vue from 'vue';
-  import {Component, Watch} from 'vue-property-decorator';
+  import {Component} from 'vue-property-decorator';
 
   window.localStorage.setItem('version','0.0.1');
 
@@ -30,7 +30,7 @@
       NumberPad: Numberpad,
       Tags: Tags,
       Types: Types,
-      Notes: Notes,
+      EditForm: EditForm,
 
 
     }

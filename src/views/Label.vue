@@ -1,15 +1,15 @@
 <template>
     <div>
         <Layout>
-            <ol class="tags">
-                <li v-for="tag in tags" :key="tag"><span>{{tag}}</span>
+            <div class="tags">
+                <router-link class="tagItem" :to="`label/editlabel/${tag.id}`" v-for="tag in tags" :key="tag.id"><span>{{tag.name}}</span>
                     <Icon name="right"></Icon>
-                </li>
+                </router-link>
 
-            </ol>
+            </div>
             <div class="createTags-wrapper">
 
-                <button class="createTags" @click="createTag">新增标签</button>
+                <Button class="createTags" @click="createTag">新增标签</Button>
             </div>
         </Layout>
     </div>
@@ -21,12 +21,17 @@
   import Vue from 'vue';
   import {Component} from 'vue-property-decorator';
   import tagModel from '@/models/tagsmodel';
+  import Button from '@/components/Button.vue';
 
   tagModel.fetch();
 
-  @Component
+  @Component({
+    components:{
+      Button:Button
+    }
+  })
   export default class Label extends Vue {
-    tags: string[] = tagModel.data;
+    tags= tagModel.data;
 
     createTag() {
       const name = window.prompt('请输入标签');
@@ -52,7 +57,7 @@
         font-size: 16px;
         padding-left: 16px;
 
-        > li {
+        > .tagItem {
             display: flex;
             min-height: 44px;
             align-items: center;

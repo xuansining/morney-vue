@@ -1,8 +1,13 @@
+type Tag={
+  id: string;
+  name: string;
+}
 type TagModel = {
-  data: string[];
-  fetch: () => void;
+
+  data: Tag[];
+  fetch: () => Tag[];
   save: () => void;
-  clone: (stringArray: string[]) => string[];
+  clone: (stringArray: Tag[]) => Tag[];
   create: (name: string) => 'success' | 'duplicated';
 }
 const localStorageKey = 'tags';
@@ -13,7 +18,7 @@ const tagModel: TagModel = {
     if (tags) {
       this.data = JSON.parse(tags);
     }
-
+    return this.data;
 
   },
   save() {
@@ -25,12 +30,16 @@ const tagModel: TagModel = {
     return JSON.parse(JSON.stringify(string));
   },
   create(name) {
-    if (this.data.indexOf(name) >= 0) {
-      return 'duplicated';
-    }
-    this.data.push(name);
-    this.save();
-    return 'success';
+    const names=this.data.map(tag=>tag.id);
+
+      if (names.indexOf(name) >= 0) {
+        return 'duplicated';
+      }
+      this.data.push({id:name,name:name});
+      this.save();
+      return 'success';
+
+
   }
 
 };
