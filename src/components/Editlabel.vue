@@ -1,7 +1,7 @@
 <template>
     <Layout>
         <div class="titleBar">
-            <Icon name="left" class="left"></Icon>
+            <Icon name="left" class="left" @click="goBack"></Icon>
             <span class="title">编辑标签</span>
             <div class="right"></div>
         </div>
@@ -46,6 +46,9 @@
         this.$router.replace('/404');
       }
 
+    }
+    goBack(){
+      this.$router.back()
     }
   }
 </script>

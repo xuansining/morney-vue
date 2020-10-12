@@ -1,3 +1,4 @@
+import createId from '@/lib/idCreator';
 type Tag={
   id: string;
   name: string;
@@ -30,12 +31,13 @@ const tagModel: TagModel = {
     return JSON.parse(JSON.stringify(string));
   },
   create(name) {
-    const names=this.data.map(tag=>tag.id);
+    const names=this.data.map(tag=>tag.name);
 
       if (names.indexOf(name) >= 0) {
         return 'duplicated';
       }
-      this.data.push({id:name,name:name});
+      const _id: number=createId();
+      this.data.push({id:_id.toString(),name:name});
       this.save();
       return 'success';
 
