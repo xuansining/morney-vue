@@ -1,12 +1,31 @@
-const recorditemmodel = {
-  clone(object: RecordItem | RecordItem[]) {
-    return JSON.parse(JSON.stringify(object));
+import cloneObj from '@/lib/clone';
+
+type Recorditemmodel= {
+  data: RecordItem[];
+  fetch: () => RecordItem[];
+  save: () => void;
+  create: (record: RecordItem) => void;
+
+
+}
+const recorditemmodel: Recorditemmodel = {
+  data:[],
+  create(record){
+    const _record=cloneObj(record);
+
+    _record.createAt=new Date();
+
+    this.data.push(_record);
+    this.save();
   },
+
   fetch() {
-    return JSON.parse(window.localStorage.getItem('recordList') || '[]') as RecordItem[];
+    this.data= JSON.parse(window.localStorage.getItem('recordList') || '[]') as RecordItem[];
+    return this.data;
   },
-  save(data: RecordItem[] | RecordItem) {
-    window.localStorage.setItem('recordList', JSON.stringify(data));
+  save() {
+    const _data=cloneObj(this.data);
+    window.localStorage.setItem('recordList',JSON.stringify(_data) );
   }
 };
 export default recorditemmodel;

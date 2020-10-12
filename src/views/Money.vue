@@ -58,10 +58,7 @@
 
     onSubmit() {
       console.log('提交');
-      const deepClone: RecordItem= recorditemmodel.clone(this.record);
-      deepClone.createAt=new Date();
-      this.recordList.push(deepClone);
-      recorditemmodel.save(this.recordList)
+      recorditemmodel.create(this.record)
 
     }
 

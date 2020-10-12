@@ -8,7 +8,7 @@
 
 <script lang="ts">
     import Vue from 'vue'
-    import {Component, Prop, Watch} from 'vue-property-decorator';
+    import {Component, Prop} from 'vue-property-decorator';
 
     @Component
   export default class EditForm extends Vue{
@@ -18,10 +18,7 @@
       @Prop({
         default:''
       }) value!: string;
-      @Watch('value')
-      onValueChanged(value: string){
-        this.$emit('update:value',value)
-      }
+
   }
 </script>
 
