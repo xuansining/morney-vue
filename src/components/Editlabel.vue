@@ -20,12 +20,12 @@
 <script lang="ts">
   import Vue from 'vue';
   import {Component} from 'vue-property-decorator';
-  import tagModel from '@/models/tagsmodel';
+
   import EditForm from '@/components/money/EditForm.vue';
   import Button from '@/components/Button.vue';
 
 
-  const tagList = tagModel.fetch();
+
   @Component({
     components: {
       EditForm: EditForm,
@@ -38,8 +38,7 @@
 
     created() {
 
-      const id = this.$route.params.id;
-      const tag = tagList.filter(tag => tag.id === id)[0];
+      const tag =window.findTag(this.$route.params.id);
       if (tag) {
         this.tag = tag;
       } else {
@@ -53,12 +52,11 @@
     }
 
     updateTagName(name: string) {
-      tagModel.update(this.tag.id, name);
+      window.updateTag(this.tag.id,name)
     }
 
     remove(id: string) {
-      console.log(id);
-      if (tagModel.remove(id)) {
+      if (window.removeTag(id)) {
         this.$router.back();
       } else {
         alert('删除失败');

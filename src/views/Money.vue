@@ -41,9 +41,9 @@
 
   export default class Money extends Vue {
 
-    dataSource = tagModel.data;
+    dataSource = window.tagList;
     record: RecordItem = {tags: [], notes: '', type: '-', amount: '0'};
-    recordList=recorditemmodel.fetch();
+    recordList=window.recordList;
     // @Watch('dataSource')
     // onDataSourceChanged(){
     //   tagModel.save()

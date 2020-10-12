@@ -19,7 +19,7 @@
 <script lang="ts">
   import Vue from 'vue';
   import {Component, Prop, Watch} from 'vue-property-decorator';
-  import tagModel from '@/models/tagsmodel';
+
 
   @Component
   export default class Tags extends Vue {
@@ -44,13 +44,7 @@
     create() {
       const createdTag = window.prompt('请输入标签');
       if (createdTag) {
-        const message = tagModel.create(createdTag);
-        if (message === 'duplicated') {
-          alert('标签名重复了');
-        } else if (message === 'success') {
-          alert('标签创建成功');
-        }
-
+        window.createTag(createdTag)
 
       } else {
         window.alert('标签不能为空');

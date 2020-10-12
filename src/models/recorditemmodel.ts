@@ -1,13 +1,6 @@
 import cloneObj from '@/lib/clone';
 
-type Recorditemmodel= {
-  data: RecordItem[];
-  fetch: () => RecordItem[];
-  save: () => void;
-  create: (record: RecordItem) => void;
 
-
-}
 const recorditemmodel: Recorditemmodel = {
   data:[],
   create(record){

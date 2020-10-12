@@ -20,10 +20,10 @@
 <script lang="ts">
   import Vue from 'vue';
   import {Component} from 'vue-property-decorator';
-  import tagModel from '@/models/tagsmodel';
+
   import Button from '@/components/Button.vue';
 
-  tagModel.fetch();
+
 
   @Component({
     components:{
@@ -31,20 +31,11 @@
     }
   })
   export default class Label extends Vue {
-    tags= tagModel.data;
+    tags= window.tagList;
 
     createTag() {
       const name = window.prompt('请输入标签');
-      if (name) {
-
-        const message = tagModel.create(name);
-        if (message === 'duplicated') {
-          alert('标签名重复了');
-        } else if (message === 'success') {
-          alert('标签创建成功');
-        }
-
-      }
+     if(name)window.createTag(name)
 
     }
 
