@@ -5,7 +5,7 @@
 
             <li @click="toggle(tag)" :class="{selected:selectedTags.indexOf(tag)>=0}" v-for="tag in dataSource"
                 v-bind:key="tag.id">
-                {{tag}}
+                {{tag.name}}
             </li>
 
 
@@ -70,6 +70,11 @@
 
 
     .tags {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        background: #ffffff;
         .current {
             display: flex;
             padding: 16px;

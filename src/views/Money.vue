@@ -2,10 +2,13 @@
     <div>
         <Layout :class-prefix="'layout'">
             <Tags :data-source="dataSource" @update:value="onUpdateTags"></Tags>
-            <EditForm @update:value="onUpdateNotes" placeholder="请输入备注" note-name="备注"></EditForm>
+            <div class="notes-wrapper">
+
+                <EditForm @update:value="onUpdateNotes" placeholder="请输入备注" note-name="备注" ></EditForm>
+            </div>
             <Types :value.sync="record.type"></Types>
             <NumberPad :value.sync="record.amount" @submit="onSubmit"></NumberPad>
-
+{{record}}
         </Layout>
     </div>
 </template>
@@ -72,5 +75,10 @@
         flex-direction: column;
         justify-content: flex-end;
     }
+    .notes-wrapper{
+        background: #E5E5E5;
+        padding: 12px 0;
+    }
+
 </style>
 
