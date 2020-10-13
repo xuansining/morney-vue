@@ -23,6 +23,7 @@
 
   import EditForm from '@/components/money/EditForm.vue';
   import Button from '@/components/Button.vue';
+  import store from '@/store';
 
 
 
@@ -32,8 +33,7 @@
       EditForm: EditForm,
       Button: Button
 
-    },
-
+    }
   })
 
   export default class Editlabel extends Vue {
@@ -41,16 +41,18 @@
 
     created() {
       //TODO
-      // const tag=this.tagList.filter(tag => tag.id === id)[0];
-      // const tag =this.$store.commit('findTag',this.$route.params.id);
-      // if (tag) {
-      //   this.tag = tag;
-      // } else {
-      //   this.$router.replace('/404');
-      // }
+
+      this.$store.commit('setCurrentTag',this.$route.params.id);
+      if (this.currentTag) {
+        this.tag = this.currentTag;
+      } else {
+        this.$router.replace('/404');
+      }
 
     }
-
+    get currentTag(){
+      return store.state.currentTag;
+    }
     goBack() {
       this.$router.back();
     }

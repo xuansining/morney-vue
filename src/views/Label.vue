@@ -33,18 +33,17 @@
     components:{
       Button:Button
     },
-    computed:{
-      tags(){
-        return store.state.tagList;
-      }
-    }
+
   })
   export default class Label extends mixins(TagHelper){
 
     created(){
       this.$store.commit('fetchTags')
     }
+    get tags(){
+         return store.state.tagList;
 
+    }
   }
 </script>
 

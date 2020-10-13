@@ -22,15 +22,7 @@
   import {TagHelper} from '@/mixins/TagHelper';
 
 
-
-  @Component({
-    computed:{
-      tagList(){
-        return store.state.tagList;
-      }
-
-  }
-  })
+  @Component
   export default class Tags extends mixins(TagHelper) {
     selectedTags: Tag[] | undefined = [];
     created(){
@@ -49,6 +41,9 @@
       }
 
 
+    }
+    get tagList(){
+      return store.state.tagList;
     }
 
 

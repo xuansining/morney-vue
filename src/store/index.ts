@@ -5,13 +5,19 @@ import cloneObj from '@/lib/clone';
 
 Vue.use(Vuex);
 const localStorageKey = 'tags';
-
+type rootState={
+  recordList: RecordItem[];
+  tagList: Tag[];
+  currentTag: Tag | undefined;
+}
 const store=new Vuex.Store({
   state: {
-    recordList:[] as RecordItem[],
-    tagList:[] as Tag[]
-  },
+    recordList:[],
+    tagList:[],
+    currentTag:undefined
+  } as rootState,
   mutations: {
+
     fetchTags(state){
        state.tagList=JSON.parse(window.localStorage.getItem(localStorageKey)||'');
     },
@@ -44,6 +50,9 @@ const store=new Vuex.Store({
         return 'not found';
       }
 
+    },
+    setCurrentTag(state,id){
+        state.currentTag=state.tagList.filter(tag=>tag.id===id)[0]
     },
     removeTag(state,id){
       let index = -1;
