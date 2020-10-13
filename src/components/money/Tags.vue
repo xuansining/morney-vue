@@ -11,14 +11,15 @@
 
         </ul>
         <div class="new">
-            <button @click="create">新增标签</button>
+            <button @click="creatTag">新增标签</button>
         </div>
     </div>
 </template>
 <script lang="ts">
-  import Vue from 'vue';
   import {Component, Watch} from 'vue-property-decorator';
   import store from '@/store';
+  import {mixins} from 'vue-class-component';
+  import {TagHelper} from '@/mixins/TagHelper';
 
 
 
@@ -30,7 +31,7 @@
 
   }
   })
-  export default class Tags extends Vue {
+  export default class Tags extends mixins(TagHelper) {
     selectedTags: Tag[] | undefined = [];
     created(){
       this.$store.commit('fetchTags')
@@ -50,15 +51,7 @@
 
     }
 
-    create() {
-      const createdTag = window.prompt('请输入标签');
-      if (createdTag) {
-         this.$store.commit('createTag',createdTag);
 
-      } else {
-        window.alert('标签不能为空');
-      }
-    }
 
     @Watch('selectedTags')
     onSelectedTagsChanged(value: string) {
