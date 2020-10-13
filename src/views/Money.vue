@@ -1,7 +1,7 @@
 <template>
     <div>
         <Layout :class-prefix="'layout'">
-            <Tags :data-source="dataSource" @update:value="onUpdateTags"></Tags>
+            <Tags  @update:value="onUpdateTags"></Tags>
             <div class="notes-wrapper">
 
                 <EditForm @update:value="onUpdateNotes" placeholder="请输入备注" note-name="备注" ></EditForm>
@@ -23,8 +23,9 @@
 
   window.localStorage.setItem('version','0.0.1');
 
-  import recorditemmodel from '@/models/recorditemmodel'
+
   import tagModel from '@/models/tagsmodel';
+  import store from '@/store/index2';
   tagModel.fetch();
 
   @Component({
@@ -41,13 +42,10 @@
 
   export default class Money extends Vue {
 
-    dataSource = window.tagList;
+
     record: RecordItem = {tags: [], notes: '', type: '-', amount: '0'};
-    recordList=window.recordList;
-    // @Watch('dataSource')
-    // onDataSourceChanged(){
-    //   tagModel.save()
-    // }
+    recordList=store.recordList;
+
     onUpdateTags(value: string[]) {
       this.record.tags = value;
     }
@@ -58,7 +56,7 @@
 
     onSubmit() {
       console.log('提交');
-      recorditemmodel.create(this.record)
+      store.createRecord(this.record)
 
     }
 

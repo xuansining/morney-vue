@@ -27,11 +27,12 @@ type TagModel = {
   update: (id: string, name: string) => 'success' | 'duplicated' | 'not found';
   remove: (id: string) => boolean;
 }
-interface Window {
-  tagList: Tag[];
-  createTag: (name: string) => void;
-  updateTag: (id: string,name: string) => 'success' | 'duplicated' | 'not found';
-  removeTag: (id: string) => boolean;
-  findTag: (id: string) => Tag;
-  recordList: RecordItem[];
-}
+// type Store ={
+//   tagList: Tag[];
+//   createTag: (name: string) => void;
+//   updateTag: (id: string,name: string) => 'success' | 'duplicated' | 'not found';
+//   removeTag: (id: string) => boolean;
+//   findTag: (id: string) => Tag;
+//   recordList: RecordItem[];
+//   createRecord:(record: RecordItem)=>void;
+// }

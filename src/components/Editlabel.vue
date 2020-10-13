@@ -23,6 +23,7 @@
 
   import EditForm from '@/components/money/EditForm.vue';
   import Button from '@/components/Button.vue';
+  import store from '@/store/index2';
 
 
 
@@ -38,7 +39,7 @@
 
     created() {
 
-      const tag =window.findTag(this.$route.params.id);
+      const tag =store.findTag(this.$route.params.id);
       if (tag) {
         this.tag = tag;
       } else {
@@ -52,11 +53,11 @@
     }
 
     updateTagName(name: string) {
-      window.updateTag(this.tag.id,name)
+      store.updateTag(this.tag.id,name)
     }
 
     remove(id: string) {
-      if (window.removeTag(id)) {
+      if (store.removeTag(id)) {
         this.$router.back();
       } else {
         alert('删除失败');
