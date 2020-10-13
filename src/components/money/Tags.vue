@@ -15,18 +15,26 @@
         </div>
     </div>
 </template>
-
 <script lang="ts">
   import Vue from 'vue';
   import {Component, Watch} from 'vue-property-decorator';
-  import store from '@/store/index2';
+  import store from '@/store';
 
 
-  @Component
+
+  @Component({
+    computed:{
+      tagList(){
+        return store.state.tagList;
+      }
+
+  }
+  })
   export default class Tags extends Vue {
-    tagList: Tag[]=store.tagList;
     selectedTags: Tag[] | undefined = [];
-
+    created(){
+      this.$store.commit('fetchTags')
+    }
     toggle(tag: Tag) {
       if (this.selectedTags) {
         const index = this.selectedTags.indexOf(tag);
@@ -45,7 +53,7 @@
     create() {
       const createdTag = window.prompt('请输入标签');
       if (createdTag) {
-        store.createTag(createdTag)
+         this.$store.commit('createTag',createdTag);
 
       } else {
         window.alert('标签不能为空');
@@ -59,6 +67,7 @@
 
   }
 </script>
+
 
 <style scoped lang="scss">
     @import "~@/assets/style/helper.scss";

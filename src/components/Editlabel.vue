@@ -23,7 +23,7 @@
 
   import EditForm from '@/components/money/EditForm.vue';
   import Button from '@/components/Button.vue';
-  import store from '@/store/index2';
+
 
 
 
@@ -31,20 +31,23 @@
     components: {
       EditForm: EditForm,
       Button: Button
-    }
+
+    },
+
   })
 
   export default class Editlabel extends Vue {
     tag: { id: string; name: string } = {id: '0', name: 'admin'};
 
     created() {
-
-      const tag =store.findTag(this.$route.params.id);
-      if (tag) {
-        this.tag = tag;
-      } else {
-        this.$router.replace('/404');
-      }
+      //TODO
+      // const tag=this.tagList.filter(tag => tag.id === id)[0];
+      // const tag =this.$store.commit('findTag',this.$route.params.id);
+      // if (tag) {
+      //   this.tag = tag;
+      // } else {
+      //   this.$router.replace('/404');
+      // }
 
     }
 
@@ -53,16 +56,17 @@
     }
 
     updateTagName(name: string) {
-      store.updateTag(this.tag.id,name)
+      this.$store.commit('updateTag',name)
+
     }
 
     remove(id: string) {
-      if (store.removeTag(id)) {
-        this.$router.back();
-      } else {
-        alert('删除失败');
-      }
-
+      // if (oldStore.removeTag(id)) {
+      //   this.$router.back();
+      // } else {
+      //   alert('删除失败');
+      // }
+ //TODO
 
     }
   }

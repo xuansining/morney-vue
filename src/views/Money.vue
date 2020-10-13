@@ -1,6 +1,7 @@
 <template>
     <div>
         <Layout :class-prefix="'layout'">
+
             <Tags  @update:value="onUpdateTags"></Tags>
             <div class="notes-wrapper">
 
@@ -8,7 +9,7 @@
             </div>
             <Types :value.sync="record.type"></Types>
             <NumberPad :value.sync="record.amount" @submit="onSubmit"></NumberPad>
-{{record}}
+
         </Layout>
     </div>
 </template>
@@ -24,12 +25,15 @@
   window.localStorage.setItem('version','0.0.1');
 
 
-  import tagModel from '@/models/tagsmodel';
-  import store from '@/store/index2';
-  tagModel.fetch();
+
+
+  import Button from '@/components/Button.vue';
+
+
 
   @Component({
     components: {
+      Button,
 
       NumberPad: Numberpad,
       Tags: Tags,
@@ -37,14 +41,14 @@
       EditForm: EditForm,
 
 
-    }
+    },
+
   })
 
   export default class Money extends Vue {
 
 
     record: RecordItem = {tags: [], notes: '', type: '-', amount: '0'};
-    recordList=store.recordList;
 
     onUpdateTags(value: string[]) {
       this.record.tags = value;
@@ -56,7 +60,8 @@
 
     onSubmit() {
       console.log('提交');
-      store.createRecord(this.record)
+
+      this.$store.commit('createRecord',this.record)
 
     }
 

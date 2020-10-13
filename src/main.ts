@@ -6,8 +6,7 @@ import store from './store';
 import Nav from '@/components/Nav.vue';
 import Layout from '@/components/Layout.vue';
 import Icon from '@/components/Icon.vue';
-import tagModel from '@/models/tagsmodel';
-import recorditemmodel from '@/models/recorditemmodel';
+
 
 
 Vue.config.productionTip = false;
