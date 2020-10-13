@@ -40,8 +40,8 @@
     tag: { id: string; name: string } = {id: '0', name: 'admin'};
 
     created() {
-      //TODO
 
+      this.$store.commit('fetchTags');
       this.$store.commit('setCurrentTag',this.$route.params.id);
       if (this.currentTag) {
         this.tag = this.currentTag;
@@ -58,18 +58,16 @@
     }
 
     updateTagName(name: string) {
-      this.$store.commit('updateTag',name)
+      this.$store.commit('updateTag',{
+        id:this.tag.id,
+        name:name
+      })
 
     }
 
     remove(id: string) {
-      // if (oldStore.removeTag(id)) {
-      //   this.$router.back();
-      // } else {
-      //   alert('删除失败');
-      // }
- //TODO
-
+      console.log('remove');
+      this.$store.commit('removeTag',id)
     }
   }
 </script>
