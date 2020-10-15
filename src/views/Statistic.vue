@@ -6,6 +6,7 @@
                   prefix="interval"></Tabs>
             <ul>
                 <li v-for="(group,index) in result" :key="index">
+
                     <h3 class="title">{{beautify(group.title)}}</h3>
                     <ol>
                         <li class="item" v-for="item in group.items" :key="item.id">
@@ -63,7 +64,7 @@
     //
     get result() {
       const {recordList} = this;
-      type hashTableValue = { title: string; items: RecordItem[] }[]
+      type hashTableValue = { title: string | undefined; items: RecordItem[] }[]
       const hashTable: hashTableValue = [];
       const _recordList = cloneObj(recordList);
       const newGroupList=_recordList.sort(function (a,b) {
@@ -71,7 +72,20 @@
 
       });
 
+      hashTable.push({title:dayjs(newGroupList[0].createAt).format('YYYY-MM-DD'),items:[]});
+      for(let i=0;i<newGroupList.length;i++){
+        const last=hashTable[hashTable.length-1];
+        const current=newGroupList[i];
+        if(dayjs(last.title).isSame( dayjs(current.createAt) ,'day')){
+          //和第一个的时间是相同的
+          last.items.push(current)
+        }else {
+           hashTable.push( {title:dayjs(current.createAt).format('YYYY-MM-DD'),items:[current]})
+        }
 
+      }
+
+      console.log(hashTable);
       return hashTable;
     }
 
