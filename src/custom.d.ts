@@ -3,7 +3,7 @@ type RecordItem = {
   notes: string;
   type: string;
   amount: string;
-  createAt?: Date;
+  createAt?: string;
 }
 type Recorditemmodel= {
   data: RecordItem[];
