@@ -5,16 +5,16 @@
             <Tabs class="interval-type" :data-source="intervalTabList" :value.sync="currentTab"
                   prefix="interval"></Tabs>
             <ul>
-               <li  v-for="(group,index) in result" :key="index">
+                <li v-for="(group,index) in result" :key="index">
                     <h3 class="title">{{beautify(group.title)}}</h3>
-                   <ol>
-                       <li class="item" v-for="item in group.items" :key="item.id">
-                             <span>{{setTag(item.tags)}}</span>
-                             <span class="note">{{item.notes}}</span>
-                           <span>￥{{item.amount}}</span>
-                       </li>
-                   </ol>
-               </li>
+                    <ol>
+                        <li class="item" v-for="item in group.items" :key="item.id">
+                            <span>{{setTag(item.tags)}}</span>
+                            <span class="note">{{item.notes}}</span>
+                            <span>￥{{item.amount}}</span>
+                        </li>
+                    </ol>
+                </li>
             </ul>
         </Layout>
     </div>
@@ -28,7 +28,7 @@
   import intervalTabList from '@/constants/intervalTabList';
   import typeTabList from '@/constants/typeTabList';
   import store from '@/store';
-
+  import cloneObj from '@/lib/clone';
 
 
   @Component({
@@ -54,46 +54,48 @@
       return store.state.recordList;
     }
 
+    // [
+    //    { title: string , items: RecordItem[] }
+    //    { title: string , items: RecordItem[] }
+    //    { title: string , items: RecordItem[] }
+    //    ....
+    // ]
+    //
     get result() {
       const {recordList} = this;
-      type hashTableValue = { title: string; items: RecordItem[]}
-      type HashTable = {
-        [key: string]:
-          hashTableValue;
-      }
-      const hashTable: HashTable = {};
-      for (let i = 0; i < recordList.length; i++) {
+      type hashTableValue = { title: string; items: RecordItem[] }[]
+      const hashTable: hashTableValue = [];
+      const _recordList = cloneObj(recordList);
+      const newGroupList=_recordList.sort(function (a,b) {
+         return dayjs(b.createAt).valueOf()-dayjs(a.createAt).valueOf()
 
-        const [date, time] = recordList[i].createAt!.split('T');
-        hashTable[date]=hashTable[date] ||{title:date,items:[]};
-        hashTable[date].items.push(recordList[i])
+      });
 
-      }
+
       return hashTable;
     }
-    beautify(string: string){
-      const d=dayjs(string);
-      const now=dayjs();
 
-      if(d.isSame(now,'day')){
-        return '今天'
-      }else if(d.isSame(now.subtract(1,'day'),'day')){
-        return '昨天'
-      }
-      else if(d.isSame(now.subtract(2,'day'),'day')){
+    beautify(string: string) {
+      const d = dayjs(string);
+      const now = dayjs();
+
+      if (d.isSame(now, 'day')) {
+        return '今天';
+      } else if (d.isSame(now.subtract(1, 'day'), 'day')) {
+        return '昨天';
+      } else if (d.isSame(now.subtract(2, 'day'), 'day')) {
         return '前天';
-      }
-      else if(d.isSame(now,'year')){
-         return dayjs(d).format('M月D日')
-      }else{
-        return dayjs(d).format('YY年M月D日')
+      } else if (d.isSame(now, 'year')) {
+        return dayjs(d).format('M月D日');
+      } else {
+        return dayjs(d).format('YY年M月D日');
       }
 
     }
 
-    setTag(tags: Tag[]): string{
+    setTag(tags: Tag[]): string {
 
-      return tags===[] ? tags.join(','):'无'
+      return tags === [] ? tags.join(',') : '无';
     }
 
   }
@@ -124,23 +126,27 @@
 
         }
     }
-    %item{
+
+    %item {
         line-height: 40px;
         padding: 0 16px;
         display: flex;
         justify-content: space-between;
         align-items: center;
     }
-    .item{
+
+    .item {
         @extend %item;
         background-color: #fff;
-        .note{
+
+        .note {
             margin-right: auto;
             padding: 0 10px;
             color: #999999;
         }
     }
-    .title{
+
+    .title {
         @extend %item;
     }
 
