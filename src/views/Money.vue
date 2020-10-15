@@ -7,7 +7,7 @@
 
                 <EditForm @update:value="onUpdateNotes" placeholder="请输入备注" note-name="备注" ></EditForm>
             </div>
-            <Types :value.sync="record.type"></Types>
+            <Tabs :value.sync="record.type" :data-source="dataSource"></Tabs>
             <NumberPad :value.sync="record.amount" @submit="onSubmit"></NumberPad>
 
         </Layout>
@@ -17,7 +17,7 @@
 <script lang="ts">
   import Numberpad from '@/components/money/Numberpad.vue';
   import Tags from '@/components/money/Tags.vue';
-  import Types from '@/components/money/Types.vue';
+
   import EditForm from '@/components/money/EditForm.vue';
   import Vue from 'vue';
   import {Component} from 'vue-property-decorator';
@@ -28,6 +28,8 @@
 
 
   import Button from '@/components/Button.vue';
+  import Tabs from '@/components/Tabs.vue';
+  import typeTabList from '@/constants/typeTabList';
 
 
 
@@ -37,7 +39,7 @@
 
       NumberPad: Numberpad,
       Tags: Tags,
-      Types: Types,
+      Tabs: Tabs,
       EditForm: EditForm,
 
 
@@ -49,7 +51,7 @@
 
 
     record: RecordItem = {tags: [], notes: '', type: '-', amount: '0'};
-
+    dataSource=typeTabList;
     onUpdateTags(value: string[]) {
       this.record.tags = value;
     }
@@ -70,7 +72,6 @@
 </script>
 <style lang="scss">
     .layout-content {
-
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
