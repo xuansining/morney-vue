@@ -25,8 +25,10 @@
   @Component
   export default class Tags extends mixins(TagHelper) {
     selectedTags: Tag[] | undefined = [];
-    created(){
-      this.$store.commit('fetchTags')
+    beforeCreate(){
+      this.$store.commit('fetchTags');
+
+
     }
     toggle(tag: Tag) {
       if (this.selectedTags) {
@@ -43,8 +45,18 @@
 
     }
     get tagList(){
+      if(store.state.tagList.length===0){
+         const defaultTags=['衣','食','住','行'];
+         defaultTags.forEach((tag)=>{
+           this.$store.commit('createTag',tag)
+         })
+
+
+      }
       return store.state.tagList;
+
     }
+
 
 
 

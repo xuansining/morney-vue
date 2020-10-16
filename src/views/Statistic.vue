@@ -25,7 +25,6 @@
   import {Component} from 'vue-property-decorator';
   import dayjs from 'dayjs';
   import Tabs from '@/components/Tabs.vue';
-  import intervalTabList from '@/constants/intervalTabList';
   import typeTabList from '@/constants/typeTabList';
   import store from '@/store';
   import cloneObj from '@/lib/clone';
@@ -46,6 +45,7 @@
 
     beforeCreate() {
       this.$store.commit('fetchRecord');
+      console.log();
 
     }
 
@@ -58,6 +58,7 @@
       const {recordList} = this;
       const hashTable: hashTableValue = [];
       const _recordList = cloneObj(recordList).filter(e => e.type === this.currentValue);
+      if(_recordList.length===0)return [] as hashTableValue;
       const newGroupList = _recordList.sort(function (a, b) {
         return dayjs(b.createAt).valueOf() - dayjs(a.createAt).valueOf();
 

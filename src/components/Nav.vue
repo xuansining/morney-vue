@@ -1,11 +1,11 @@
 <template>
     <nav>
-        <router-link to="/money" class="item" active-class="selected">
+        <router-link to="/money" :class="'item'" active-class="selected" >
 
             <Icon v-bind:name="'money'" class="icon" ></Icon>
            记账
         </router-link>
-        <router-link to="/label" class="item" active-class="selected">
+        <router-link to="/label" class="item" active-class="selected" >
             <Icon v-bind:name="'label'"  class="icon"></Icon>
                标签
             </router-link>
@@ -22,7 +22,9 @@
 
   export default {
 
+
     name: 'Nav',
+
     components:{
       Icon:Icon
     }
@@ -54,6 +56,9 @@
       }
       >.item.selected{
           color:$red;
+      }
+      >.item.selected-first{
+          color: white;
       }
   }
 </style>

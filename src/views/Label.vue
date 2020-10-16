@@ -41,7 +41,7 @@
       this.$store.commit('fetchTags')
     }
     get tags(){
-         return store.state.tagList;
+         return store.state.tagList.length===0?[] as Tag[] : store.state.tagList;
 
     }
   }

@@ -2,10 +2,10 @@
     <div>
         <Layout :class-prefix="'layout'">
 
-            <Tags  @update:value="onUpdateTags"></Tags>
+            <Tags  @update:value="onUpdateTags" ></Tags>
             <div class="notes-wrapper">
 
-                <EditForm @update:value="onUpdateNotes" placeholder="请输入备注" note-name="备注" ></EditForm>
+                <EditForm @update:value="onUpdateNotes" placeholder="请输入备注" note-name="备注" :value="record.notes"></EditForm>
             </div>
             <Tabs :value.sync="record.type" :data-source="dataSource"></Tabs>
             <NumberPad :value.sync="record.amount" @submit="onSubmit"></NumberPad>
@@ -62,8 +62,9 @@
 
     onSubmit() {
       console.log('提交');
-
-      this.$store.commit('createRecord',this.record)
+      if(this.record.tags.length===0)return window.alert('请至少选择一个标签');
+      this.$store.commit('createRecord',this.record);
+      this.record.notes='';
 
     }
 

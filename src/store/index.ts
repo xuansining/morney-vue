@@ -10,12 +10,14 @@ type rootState = {
   recordList: RecordItem[];
   tagList: Tag[];
   currentTag: Tag | undefined;
+  createError: string | null;
 }
 const store = new Vuex.Store({
   state: {
     recordList: [],
     tagList: [],
-    currentTag: undefined
+    currentTag: undefined,
+    createError: null
   } as rootState,
   mutations: {
 
@@ -27,13 +29,19 @@ const store = new Vuex.Store({
 
       if (names.indexOf(name) >= 0) {
         alert('标签名重复');
+        return
       }
-      const _id: number = createId();
-      state.tagList.push({id: _id.toString(), name: name});
-      store.commit('saveTags');
-      alert('标签创建成功');
-      console.log('tagList');
-      console.log(state.tagList);
+      try{
+        const _id: number = createId();
+        state.tagList.push({id: _id.toString(), name: name});
+        store.commit('saveTags');
+
+      }catch (e) {
+        state.createError=e.message.toString();
+      }
+
+
+
 
     },
     updateTag(state, obj: {id: string;name: string}) {
