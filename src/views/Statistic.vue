@@ -3,7 +3,7 @@
         <Layout>
             <Tabs :value.sync="currentValue" class="st-type" prefix="statistic" :data-source="typeTabList"></Tabs>
 
-            <ul>
+            <ul v-if="recordList.length>0">
                 <li v-for="(group,index) in result" :key="index">
 
                     <h3 class="title">{{beautify(group.title)}} <span>￥{{group.total}}</span></h3>
@@ -16,6 +16,7 @@
                     </ol>
                 </li>
             </ul>
+            <div v-else class="none-tip">目前尚无记录</div>
         </Layout>
     </div>
 </template>
@@ -58,6 +59,7 @@
       const {recordList} = this;
       const hashTable: hashTableValue = [];
       const _recordList = cloneObj(recordList).filter(e => e.type === this.currentValue);
+
       if(_recordList.length===0)return [] as hashTableValue;
       const newGroupList = _recordList.sort(function (a, b) {
         return dayjs(b.createAt).valueOf() - dayjs(a.createAt).valueOf();
@@ -152,7 +154,10 @@
         justify-content: space-between;
         align-items: center;
     }
-
+    .none-tip{
+        padding: 26px;
+        text-align: center;
+    }
     .item {
         @extend %item;
         background-color: #fff;

@@ -65,7 +65,7 @@
     }
 
     onOk() {
-
+      if(this.output==='' || this.output==='0') return window.alert('金额不能为空');
       this.$emit('update:value',this.output);
       this.$emit('submit');
       this.output = '0';
