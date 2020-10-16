@@ -2,8 +2,7 @@
     <div>
         <Layout>
             <Tabs :value.sync="currentValue" class="st-type" prefix="statistic" :data-source="typeTabList"></Tabs>
-            <Tabs class="interval-type" :data-source="intervalTabList" :value.sync="currentTab"
-                  prefix="interval"></Tabs>
+
             <ul>
                 <li v-for="(group,index) in result" :key="index">
 
@@ -41,8 +40,7 @@
   export default class Statistic extends Vue {
 
     currentValue = '-';
-    currentTab = 'day';
-    intervalTabList = intervalTabList;
+
     typeTabList = typeTabList;
 
 
@@ -55,16 +53,9 @@
       return store.state.recordList;
     }
 
-    // [
-    //    { title: string , items: RecordItem[] }
-    //    { title: string , items: RecordItem[] }
-    //    { title: string , items: RecordItem[] }
-    //    ....
-    // ]
-    //
+
     get result() {
       const {recordList} = this;
-      type hashTableValue = { title: string | undefined; total?: number; items: RecordItem[] }[]
       const hashTable: hashTableValue = [];
       const _recordList = cloneObj(recordList).filter(e => e.type === this.currentValue);
       const newGroupList = _recordList.sort(function (a, b) {
@@ -87,16 +78,9 @@
 
 
       hashTable.map(group => {
-        console.log(group);
-
-        let result = 0;
-        for (let i = 0; i < group.items.length; i++) {
-          result = result + parseFloat(group.items[i].amount);
-        }
-        group.total = result;
-        // group.total = group.items.reduce((sum, item) => {
-        //   return sum + item.amount;
-        // }, 0);
+        group.total = group.items.reduce((sum, item) => {
+          return sum + parseFloat(item.amount);
+        }, 0);
       });
       return hashTable;
     }
@@ -123,7 +107,7 @@
 
       const tagsString = tags.map(tag => tag.name);
 
-      if (tagsString.length>0) {
+      if (tagsString.length > 0) {
         return tagsString.join(',');
       } else {
 
